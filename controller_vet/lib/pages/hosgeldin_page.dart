@@ -60,7 +60,7 @@ class HosgeldinPage extends StatelessWidget {
           
           Positioned(
             top: 0.16.sh,
-            left: 0.16.sh,
+            left: 0.14.sh,
             child: Container(
               width: 200,
               height: 200,
@@ -83,26 +83,22 @@ class HosgeldinPage extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-              top: 0.5.sh,
-              left: 0.12.sh,
-              child: Text(
-                "Kaydın Tamamlandı!",
-                style: TextStyle(fontSize: 30, color: Colors.white),
-              )),
+
+          
+         
           Positioned(
               top: 0.55.sh,
-              left: 0.02.sh,
+              left: 0.010.sh,
               child: Text(
                 "VetBul'a Hoşgeldin",
-                style: TextStyle(fontSize: 50, color: Colors.white),
+                style: TextStyle(fontSize: 45, color: Colors.white),
               )),
           Positioned(
               bottom: 0.2.sh,
-              left: 0.16.sh,
+              left: 0.11.sh,
               child: SizedBox(
-                width: 200,
-                height: 50,
+                width: 200.w,
+                height: 50.h,
                 child: ElevatedButton(
                   
                   style: ElevatedButton.styleFrom(primary: Color.fromARGB(255, 95, 230, 99),),
@@ -114,10 +110,9 @@ class HosgeldinPage extends StatelessWidget {
               
                Positioned(
                  bottom: 0.05.sh,
-                 left: 0.27.sh,
+                 left: 0.2.sh,
                  child: Container(
-                  height: 60.h,
-                  width: 50.w,
+                  
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage('lib/assets/vet.png'),

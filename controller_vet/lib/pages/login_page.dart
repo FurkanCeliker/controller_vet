@@ -1,9 +1,14 @@
 // ignore_for_file: dead_code
 
+import 'package:controller_vet/bloc/auth_bloc.dart';
+import 'package:controller_vet/pages/hosgeldin_page.dart';
+import 'package:controller_vet/pages/register_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -13,237 +18,299 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController mailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey();
   bool _isObscure = true;
+  @override
+  void dispose() {
+    mailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Container(
-        color: Color(0xFFEDEAF1),
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            // Bilgi Yazı Kısmı buraya gelecek
-            Row(children: [
-              // LOGO
-              logo(),
-              // Controller Vet text
-              companyNameText(),
-            ]),
-
-            //Kullanıcı adı şifre kısmı buraya gelecek
-            mailText(),
-            sifreText(),
-            sifremiUnuttum(),
-            // Giriş yap butonu
-            girisYap(),
-          // SOCİAL GİRİŞ
-            socialGiris(),
-
-            // Divider kısmı ortasında yazı var
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 50, right: 15),
-                    child: Container(
-                        height: 1,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [
-                              Colors.white,
-                              Colors.black,
-                            ],
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight)),
-                        padding: EdgeInsets.only(left: 70, right: 15),
-                        child: Divider(
-                          height: 30.h,
-                          color: Colors.black,
-                        )),
-                  ),
-                  Text('Veteriner Misin?'),
-                  Padding(
-                      padding: EdgeInsets.only(left: 15, right: 50),
-                      child: Container(
-                          height: 1.h,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [Colors.white, Colors.black],
-                                  begin: Alignment.centerRight,
-                                  end: Alignment.centerLeft)),
-                          padding: EdgeInsets.only(right: 70, left: 15),
-                          child: Divider(
-                            height: 30.h,
-                            color: Colors.black,
-                          ))),
-                ],
+      child: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is Authenticated) {
+            // Navigating to the dashboard screen if the user is authenticated
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const HosgeldinPage()));
+          }
+          if (state is AuthError) {
+            // Showing the error message if the user has entered invalid credentials
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.error)));
+          }
+        },
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is Loading) {
+              // Showing the loading indicator while the user is signing in
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (state is UnAuthenticated) {
+            return Form(
+              key: formKey,
+              child: Container(
+                color: Color(0xFFEDEAF1),
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    Spacer(),
+                    // Bilgi Yazı Kısmı buraya gelecek
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      // LOGO
+                      logo(),
+                      // Controller Vet text
+                      companyNameText(),
+                    ]),
+            
+                    //Kullanıcı adı şifre kısmı buraya gelecek
+                    mailText(),
+                    sifreText(),
+                    sifremiUnuttum(),
+                    // Giriş yap butonu
+                    girisYap(),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    // SOCİAL GİRİŞ
+                    socialGiris(),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+            
+                    // Divider kısmı ortasında yazı var
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 15.w, right: 15.w),
+                          child: Container(
+                              height: 1,
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: [
+                                    Colors.white,
+                                    Colors.black,
+                                  ],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight)),
+                              padding: EdgeInsets.only(left: 100.w, right: 15),
+                              child: Divider(
+                                height: 1.h,
+                                color: Colors.black,
+                              )),
+                        ),
+                        Text('Veteriner Misin?'),
+                        Padding(
+                          padding: EdgeInsets.only(left: 15.w, right: 15.w),
+                          child: Container(
+                              height: 1,
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: [
+                                    Colors.black,
+                                    Colors.white,
+                                  ],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight)),
+                              padding: EdgeInsets.only(left: 100.w, right: 15.w),
+                              child: Divider(
+                                height: 1.h,
+                                color: Colors.black,
+                              )),
+                        ),
+                      ],
+                    ),
+            
+                    // divider bitti
+                    kayitOl(),
+                  ],
+            
+                  //
+                ),
               ),
-            ),
-            // divider bitti
-            kayitOl(),
-          ],
-
-          //
+            );
+            }
+            return Container();
+          },
         ),
       ),
     );
   }
 
-  Padding companyNameText() {
-    return Padding(
-              padding: const EdgeInsets.only(top: 60),
-              child: Text(
-                'VetBul',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 40,
-                ),
-              ),
-            );
+  Text companyNameText() {
+    return Text(
+      'VetBul',
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 40,
+      ),
+    );
   }
 
-  Padding logo() {
-    return Padding(
-              padding: const EdgeInsets.only(left: 120, top: 60),
-              child: Container(
-                height: 60.h,
-                width: 50.w,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('lib/assets/vet.png'),
-                      fit: BoxFit.cover),
-                ),
-              ),
-            );
+  Container logo() {
+    return Container(
+      height: 70.h,
+      width: 70.w,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('lib/assets/vet.png'), fit: BoxFit.fill),
+      ),
+    );
   }
 
-  Padding kayitOl() {
-    return Padding(
-            padding: const EdgeInsets.only(left: 100, right: 125, top: 10),
-            child: TextButton(
-                onPressed: () {},
-                child: Text(
-                  ' Kayıt Ol',
-                  style: TextStyle(color: Colors.blue, fontSize: 15),
-                )),
-          );
+  Center kayitOl() {
+    return Center(
+      child: TextButton(
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => RegisterPage()));
+          },
+          child: Text(
+            ' Kayıt Ol',
+            style: TextStyle(color: Colors.blue, fontSize: 15),
+          )),
+    );
   }
 
-  Padding socialGiris() {
-    return Padding(
-            padding: const EdgeInsets.only(top: 10, left: 140),
-            child: Row(
-              children: [
-                Container(
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.white,)),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Image.asset('lib/assets/google.png'),
-                    color: Colors.orange,
-                    iconSize: 15,
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.white)),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Image.asset('lib/assets/facebook.png'),
-                    color: Colors.orange,
-                    iconSize: 15,
-                    
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-              ],
-            ),
-          );
+  Row socialGiris() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              border: Border.all(
+            color: Colors.white,
+          )),
+          child: IconButton(
+            onPressed: () {_authenticateWithGoogle(context);},
+            icon: Image.asset('lib/assets/google.png'),
+            color: Colors.orange,
+            iconSize: 15,
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Container(
+          decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+          child: IconButton(
+            onPressed: () {},
+            icon: Image.asset('lib/assets/facebook.png'),
+            color: Colors.orange,
+            iconSize: 15,
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+      ],
+    );
   }
 
   Container girisYap() {
     return Container(
-            height: 60.h,
-            width: 320.w,
-            decoration: BoxDecoration(
-              color: Color(0xFFF36969),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: TextButton(
-              onPressed: () {},
-              child: Text(
-                'Giriş Yap',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          );
+      height: 60.h,
+      width: 320.w,
+      decoration: BoxDecoration(
+        color: Color(0xFFF36969),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: TextButton(
+        onPressed: () {
+          _authenticateWithEmailAndPassword(context);
+        },
+        child: Text(
+          'Giriş Yap',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
   }
 
   Padding sifremiUnuttum() {
     return Padding(
-            padding: const EdgeInsets.only(top: 10, left: 200),
-            child: TextButton(
-              onPressed: () {},
-              child: Text(
-                'Şifremi Unuttum',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-          );
+      padding: const EdgeInsets.only(top: 10, left: 200),
+      child: TextButton(
+        onPressed: () {},
+        child: Text(
+          'Şifremi Unuttum',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+    );
   }
 
   Padding sifreText() {
     return Padding(
-            padding: const EdgeInsets.only(left: 45, right: 45, top: 20),
-            child: TextField(
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _isObscure ? Icons.visibility : Icons.visibility_off,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isObscure = !_isObscure;
-                      });
-                    },
-                  ),
-                  filled: true,
-                  labelStyle: TextStyle(color: Colors.grey),
-                  fillColor: Colors.white,
-                  labelText: 'Şifre',
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(12))),
-              obscureText: _isObscure,
+      
+      padding: const EdgeInsets.only(left: 45, right: 45, top: 20),
+      child: TextField(
+        controller: passwordController,
+        cursorColor: Colors.grey,
+        decoration: InputDecoration(
+            suffixIcon: IconButton(
+              icon: Icon(
+                _isObscure ? Icons.visibility : Icons.visibility_off,
+                color: Colors.grey,
+              ),
+              onPressed: () {
+                setState(() {
+                  _isObscure = !_isObscure;
+                });
+              },
             ),
-          );
+            filled: true,
+            labelStyle: TextStyle(color: Colors.grey),
+            fillColor: Colors.white,
+            labelText: 'Şifre',
+            border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(12))),
+        obscureText: _isObscure,
+      ),
+    );
   }
 
   Padding mailText() {
     return Padding(
-            padding: const EdgeInsets.only(left: 45, right: 45, top: 100),
-            child: TextField(
-              cursorColor: Colors.grey,
-              decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Colors.grey),
-                  labelText: 'Mail Adresi',
-                  fillColor: Colors.white,
-                  filled: true,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none)),
-              obscureText: false,
-            ),
-          );
+      padding: const EdgeInsets.only(left: 45, right: 45, top: 100),
+      child: TextField(
+        controller: mailController,
+        cursorColor: Colors.grey,
+        decoration: InputDecoration(
+            labelStyle: TextStyle(color: Colors.grey),
+            labelText: 'Mail Adresi',
+            fillColor: Colors.white,
+            filled: true,
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none)),
+        obscureText: false,
+      ),
+    );
+  }
+  void _authenticateWithEmailAndPassword(context) {
+    if (formKey.currentState!.validate()) {
+      BlocProvider.of<AuthBloc>(context).add(
+        SignInRequested(mailController.text, passwordController.text),
+      );
+    }
+  }
+
+ 
+
+  void _authenticateWithGoogle(context) {
+    BlocProvider.of<AuthBloc>(context).add(
+      GoogleSignInRequested(),
+    );
   }
 }

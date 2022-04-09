@@ -29,8 +29,7 @@ class _VetDetailState extends State<VetDetail>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Stack(
+      body:  Stack(
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 330),
@@ -87,19 +86,21 @@ class _VetDetailState extends State<VetDetail>
                       ),
                     ),
                     
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10,left:160),
-                      child:Row(
-                        children: [
-                          Icon(Icons.location_on),
-                         SizedBox(width: 5),
-                           Text(
-                        'İstanbul',
-                        style: TextStyle(fontSize: 18, color: Colors.grey),
-                      ),
-                        ],
-                      ),
-                    ),
+                   
+                         Row(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.location_on),
+                             SizedBox(width: 5),
+                               Text(
+                            'İstanbul',
+                            style: TextStyle(fontSize: 18, color: Colors.grey),
+                          ),
+                            ],
+                          ),
+                      
+                    
+                    
                     Padding(
                       padding: EdgeInsets.only(left: 30, top: 10, right: 30),
                       child: Divider(
@@ -126,8 +127,8 @@ class _VetDetailState extends State<VetDetail>
             ),
             Positioned(
                 top: 0.14.sh,
-                left: 0.18.sh,
-                right: 0.18.sh,
+                left: 0.15.sh,
+                right: 0.15.sh,
                 child: Container(
                   width: 100.w,
                   height: 250.h,
@@ -135,50 +136,87 @@ class _VetDetailState extends State<VetDetail>
                     border: Border.all(color: Colors.white),
                     image: DecorationImage(
                       image: AssetImage('lib/assets/flamingo.jpg'),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                     borderRadius: BorderRadius.circular(25),
                   ),
                 )),
-            Positioned(
-              top: 0.6.sh,
-              left: 0.05.sh,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                width: 350,
-                height: 230,
-                child: ContainedTabBarView(
-                  tabBarProperties: TabBarProperties(
-                      indicatorColor: Colors.transparent,
-                      unselectedLabelColor: Colors.grey,
-                      labelColor: Colors.black),
-                  tabs: [
-                    Text(
-                      'Detay',
-                      style: TextStyle(fontSize: 17),
-                    ),
-                    Text(
-                      'İletişim',
-                      style: TextStyle(fontSize: 17),
-                    ),
-                    Text(
-                      'Adres',
-                      style: TextStyle(fontSize: 17),
-                    ),
-                    
-                  ],
-                  views: [
-                    
-                       SingleChildScrollView(
+            Padding(
+              padding: EdgeInsets.only(),
+              child: Align(
+                
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  width: 350,
+                  height: 230,
+                  child: ContainedTabBarView(
+                    tabBarProperties: TabBarProperties(
+                        indicatorColor: Colors.transparent,
+                        unselectedLabelColor: Colors.grey,
+                        labelColor: Colors.black),
+                    tabs: [
+                      Text(
+                        'Detay',
+                        style: TextStyle(fontSize: 17),
+                      ),
+                      Text(
+                        'İletişim',
+                        style: TextStyle(fontSize: 17),
+                      ),
+                      Text(
+                        'Adres',
+                        style: TextStyle(fontSize: 17),
+                      ),
+                      
+                    ],
+                    views: [
+                      
+                         SingleChildScrollView(
+                          child: Container(
+                            color: Colors.white,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 30,left: 15),
+                                  child: Text(
+                                    '2015 yılından bu yana Avcılar’da faaliyet göstermekte olan Lima Veteriner Kliniği, öncelikle “HAYVANA SAYGININ BAŞLADIĞI YER” olmayı kendine ilke edinmiştir. Çalışan kadrosu, modern ve teknolojik koşullarıyla bu felsefesini istisnasız korumayı başarmıştır…',
+                                    style: TextStyle(color: Colors.grey.shade700),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      
+                      SingleChildScrollView(
                         child: Container(
                           color: Colors.white,
-                          child: Column(
+                          child: Column(          
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(top: 30,left: 15),
+                                padding: const EdgeInsets.only(top: 30),
+                                child: Column(children: [
+                                  Text('Telefon :  0536 280 93 17'),
+                                  SizedBox(height: 10,),
+                                  Text('Mail : info@flamingo.com'),
+                                ],),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        child: Container(
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 30),
                                 child: Text(
-                                  '2015 yılından bu yana Avcılar’da faaliyet göstermekte olan Lima Veteriner Kliniği, öncelikle “HAYVANA SAYGININ BAŞLADIĞI YER” olmayı kendine ilke edinmiştir. Çalışan kadrosu, modern ve teknolojik koşullarıyla bu felsefesini istisnasız korumayı başarmıştır…',
+                                  'Anadolu caddesi beste sokak no 9 daire 5',
                                   style: TextStyle(color: Colors.grey.shade700),
                                 ),
                               ),
@@ -186,49 +224,15 @@ class _VetDetailState extends State<VetDetail>
                           ),
                         ),
                       ),
-                    
-                    SingleChildScrollView(
-                      child: Container(
-                        color: Colors.white,
-                        child: Column(          
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 30),
-                              child: Column(children: [
-                                Text('Telefon :  0536 280 93 17'),
-                                SizedBox(height: 10,),
-                                Text('Mail : info@flamingo.com'),
-                              ],),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      child: Container(
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 30),
-                              child: Text(
-                                'Anadolu caddesi beste sokak no 9 daire 5',
-                                style: TextStyle(color: Colors.grey.shade700),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                  onChange: (index) => print(index),
+                    ],
+                    onChange: (index) => print(index),
+                  ),
                 ),
               ),
             ),
           ],
         ),
-      ),
+      
     );
   }
 }

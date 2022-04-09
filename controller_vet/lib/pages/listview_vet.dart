@@ -54,7 +54,7 @@ class _ListviewVetState extends State<ListviewVet> {
             ),
             Positioned(
               top: 0.05.sh,
-              left: 0.19.sh,
+              left: 0.15.sh,
               child: Container(
                   child: Text(
                 'Arama Sonuçları',
