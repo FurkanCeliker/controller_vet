@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       designSize: Size(412,732),
       builder: ()=>MaterialApp(
       title: 'Material App',
-      home:  HosgeldinPage(),
+      home:  ListviewVet(),
       theme: ThemeData.light().copyWith(
           textTheme: GoogleFonts.cantoraOneTextTheme(),
         ),
