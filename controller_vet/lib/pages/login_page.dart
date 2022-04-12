@@ -3,12 +3,15 @@
 import 'package:controller_vet/bloc/auth_bloc.dart';
 import 'package:controller_vet/pages/hosgeldin_page.dart';
 import 'package:controller_vet/pages/register_page.dart';
+import 'package:controller_vet/pages/sifremi_unuttum_page.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -20,14 +23,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController mailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey();
+  final formKey = GlobalKey<FormState>();
   bool _isObscure = true;
-  @override
-  void dispose() {
-    mailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +35,10 @@ class _LoginPageState extends State<LoginPage> {
           if (state is Authenticated) {
             // Navigating to the dashboard screen if the user is authenticated
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const HosgeldinPage()));
+                MaterialPageRoute(builder: (context) =>  HosgeldinPage()));
           }
-          if (state is AuthError) {
+         else if (state is AuthError) {
+            debugPrint('AuthError a düştü');
             // Showing the error message if the user has entered invalid credentials
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.error)));
@@ -48,96 +47,101 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
             if (state is Loading) {
+              debugPrint('Loading kısmında');
               // Showing the loading indicator while the user is signing in
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
             if (state is UnAuthenticated) {
-            return Form(
-              key: formKey,
-              child: Container(
-                color: Color(0xFFEDEAF1),
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    Spacer(),
-                    // Bilgi Yazı Kısmı buraya gelecek
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      // LOGO
-                      logo(),
-                      // Controller Vet text
-                      companyNameText(),
-                    ]),
-            
-                    //Kullanıcı adı şifre kısmı buraya gelecek
-                    mailText(),
-                    sifreText(),
-                    sifremiUnuttum(),
-                    // Giriş yap butonu
-                    girisYap(),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    // SOCİAL GİRİŞ
-                    socialGiris(),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-            
-                    // Divider kısmı ortasında yazı var
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 15.w, right: 15.w),
-                          child: Container(
-                              height: 1,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [
-                                    Colors.white,
-                                    Colors.black,
-                                  ],
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight)),
-                              padding: EdgeInsets.only(left: 100.w, right: 15),
-                              child: Divider(
-                                height: 1.h,
-                                color: Colors.black,
-                              )),
-                        ),
-                        Text('Veteriner Misin?'),
-                        Padding(
-                          padding: EdgeInsets.only(left: 15.w, right: 15.w),
-                          child: Container(
-                              height: 1,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [
-                                    Colors.black,
-                                    Colors.white,
-                                  ],
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight)),
-                              padding: EdgeInsets.only(left: 100.w, right: 15.w),
-                              child: Divider(
-                                height: 1.h,
-                                color: Colors.black,
-                              )),
-                        ),
-                      ],
-                    ),
-            
-                    // divider bitti
-                    kayitOl(),
-                  ],
-            
-                  //
+              return Form(
+                key: formKey,
+                child: Container(
+                  color: Color(0xFFEDEAF1),
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: [
+                      Spacer(),
+                      // Bilgi Yazı Kısmı buraya gelecek
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // LOGO
+                            logo(),
+                            // Controller Vet text
+                            companyNameText(),
+                          ]),
+
+                      //Kullanıcı adı şifre kısmı buraya gelecek
+                      mailText(),
+                      sifreText(),
+                      sifremiUnuttum(),
+                      // Giriş yap butonu
+                      girisYap(),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      // SOCİAL GİRİŞ
+                      socialGiris(),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+
+                      // Divider kısmı ortasında yazı var
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 15.w, right: 15.w),
+                            child: Container(
+                                height: 1,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        colors: [
+                                      Colors.white,
+                                      Colors.black,
+                                    ],
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight)),
+                                padding:
+                                    EdgeInsets.only(left: 100.w, right: 15),
+                                child: Divider(
+                                  height: 1.h,
+                                  color: Colors.black,
+                                )),
+                          ),
+                          Text('Veteriner Misin?'),
+                          Padding(
+                            padding: EdgeInsets.only(left: 15.w, right: 15.w),
+                            child: Container(
+                                height: 1,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        colors: [
+                                      Colors.black,
+                                      Colors.white,
+                                    ],
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight)),
+                                padding:
+                                    EdgeInsets.only(left: 100.w, right: 15.w),
+                                child: Divider(
+                                  height: 1.h,
+                                  color: Colors.black,
+                                )),
+                          ),
+                        ],
+                      ),
+
+                      // divider bitti
+                      kayitOl(),
+                    ],
+
+                    //
+                  ),
                 ),
-              ),
-            );
+              );
             }
             return Container();
           },
@@ -191,7 +195,9 @@ class _LoginPageState extends State<LoginPage> {
             color: Colors.white,
           )),
           child: IconButton(
-            onPressed: () {_authenticateWithGoogle(context);},
+            onPressed: () {
+              _authenticateWithGoogle(context);
+            },
             icon: Image.asset('lib/assets/google.png'),
             color: Colors.orange,
             iconSize: 15,
@@ -240,7 +246,13 @@ class _LoginPageState extends State<LoginPage> {
     return Padding(
       padding: const EdgeInsets.only(top: 10, left: 200),
       child: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SifremiUnuttumPage(),
+              ));
+        },
         child: Text(
           'Şifremi Unuttum',
           style: TextStyle(color: Colors.black),
@@ -251,11 +263,17 @@ class _LoginPageState extends State<LoginPage> {
 
   Padding sifreText() {
     return Padding(
-      
       padding: const EdgeInsets.only(left: 45, right: 45, top: 20),
-      child: TextField(
+      child: TextFormField(
         controller: passwordController,
         cursorColor: Colors.grey,
+        keyboardType: TextInputType.text,
+        autovalidateMode: AutovalidateMode.disabled,
+        validator: (value) {
+                                    return value != null && value.length < 6
+                                        ? "Minimun 6 karakter"
+                                        : null;
+                                  },
         decoration: InputDecoration(
             suffixIcon: IconButton(
               icon: Icon(
@@ -283,7 +301,13 @@ class _LoginPageState extends State<LoginPage> {
   Padding mailText() {
     return Padding(
       padding: const EdgeInsets.only(left: 45, right: 45, top: 100),
-      child: TextField(
+      child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        validator: (value) {
+          return value != null && !EmailValidator.validate(value)
+              ? 'Doğru bir mail adresi giriniz'
+              : null;
+        },
         controller: mailController,
         cursorColor: Colors.grey,
         decoration: InputDecoration(
@@ -298,15 +322,15 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
   void _authenticateWithEmailAndPassword(context) {
     if (formKey.currentState!.validate()) {
       BlocProvider.of<AuthBloc>(context).add(
-        SignInRequested(mailController.text, passwordController.text),
+        SignInRequested(
+            email: mailController.text, password: passwordController.text),
       );
     }
   }
-
- 
 
   void _authenticateWithGoogle(context) {
     BlocProvider.of<AuthBloc>(context).add(

@@ -10,7 +10,7 @@ class SignInRequested extends AuthEvent {
   final String email;
   final String password;
 
-  SignInRequested(this.email, this.password);
+  SignInRequested({required this.email,required this.password});
 }
 
 // When the user signing up with email and password this event is called and the [AuthRepository] is called to sign up the user

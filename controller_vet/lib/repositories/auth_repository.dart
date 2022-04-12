@@ -57,6 +57,15 @@ class AuthRepository {
     
   }
 
+  Future<void> findVet({required String il,required String ilce,required bool yediYirmiDort,required bool petTaksi, required bool evdeBakim}) async{
+    try{
+    FirebaseFirestore _firestore= FirebaseFirestore.instance;
+    
+    }catch(e){
+      Exception(e.toString());
+    }
+  }
+
 
   Future<void> signUp({required String email, required String password,required String vetName,required String vetPhone,required String vetWhatsapp,required String vetDescription,required bool petTaksi, required bool yediYirmiDort,required bool evdeBakim, required String petIl, required String petIlce, required String petAdres, required XFile file}) async {
     try {
@@ -67,7 +76,7 @@ class AuthRepository {
           .createUserWithEmailAndPassword(email: email, password: password);
           var user= result.user;
 
-         await FirebaseFirestore.instance.collection("users").doc(user!.uid).set({'user_id':user.uid,'user_password':password});
+         await FirebaseFirestore.instance.collection("users").doc(user!.uid).set({'user_id':user.uid,'user_password':password , 'user_email': email});
         
         
          await _firestore.collection("vet").doc(user.uid).set({'vet_724':yediYirmiDort,'vet_adi':vetName,'vet_adres':petAdres,'vet_detay':vetDescription,'vet_evdebakim':evdeBakim,'vet_il':petIl,'vet_ilce':petIlce,'vet_mail':email,'vet_pettaksi':petTaksi,'vet_sifre':password,'vet_tel':vetPhone,'vet_wp':vetWhatsapp,'vet_id':user.uid});
@@ -80,9 +89,9 @@ class AuthRepository {
          });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        throw Exception('The password provided is too weak.');
+        throw Exception('Parola daha güçlü olmalı');
       } else if (e.code == 'email-already-in-use') {
-        throw Exception('The account already exists for that email.');
+        throw Exception('Bu hesap zaten bulunuyor');
       }
     } catch (e) {
       throw Exception(e.toString());

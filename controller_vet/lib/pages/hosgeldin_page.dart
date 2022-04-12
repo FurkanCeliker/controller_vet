@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:controller_vet/pages/listview_vet.dart';
+import 'package:controller_vet/pages/sorgu_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -103,7 +104,7 @@ class HosgeldinPage extends StatelessWidget {
                   
                   style: ElevatedButton.styleFrom(primary: Color.fromARGB(255, 95, 230, 99),),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ListviewVet()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> IlIlceSecimi()));
                   }, child: Text('Geç',style: TextStyle(color: Colors.white,fontSize: 20),),
                   ),
               )),
