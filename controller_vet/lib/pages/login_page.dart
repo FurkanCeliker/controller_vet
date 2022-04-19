@@ -1,16 +1,13 @@
 // ignore_for_file: dead_code
 
 import 'package:controller_vet/bloc/auth_bloc.dart';
-import 'package:controller_vet/pages/hosgeldin_page.dart';
 import 'package:controller_vet/pages/register_page.dart';
 import 'package:controller_vet/pages/sifremi_unuttum_page.dart';
+import 'package:controller_vet/pages/sorgu_page.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -33,13 +30,13 @@ class _LoginPageState extends State<LoginPage> {
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is Authenticated) {
-            // Navigating to the dashboard screen if the user is authenticated
+            
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) =>  HosgeldinPage()));
+                MaterialPageRoute(builder: (context) =>  IlIlceSecimi()));
           }
          else if (state is AuthError) {
-            debugPrint('AuthError a düştü');
-            // Showing the error message if the user has entered invalid credentials
+           
+           
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.error)));
           }
@@ -47,8 +44,8 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
             if (state is Loading) {
-              debugPrint('Loading kısmında');
-              // Showing the loading indicator while the user is signing in
+             
+              
               return const Center(
                 child: CircularProgressIndicator(),
               );
@@ -57,12 +54,12 @@ class _LoginPageState extends State<LoginPage> {
               return Form(
                 key: formKey,
                 child: Container(
-                  color: Color(0xFFEDEAF1),
+                  color: const Color(0xFFEDEAF1),
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: [
-                      Spacer(),
+                     const Spacer(),
                       // Bilgi Yazı Kısmı buraya gelecek
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                             padding: EdgeInsets.only(left: 15.w, right: 15.w),
                             child: Container(
                                 height: 1,
-                                decoration: BoxDecoration(
+                                decoration:const BoxDecoration(
                                     gradient: LinearGradient(
                                         colors: [
                                       Colors.white,
@@ -111,12 +108,12 @@ class _LoginPageState extends State<LoginPage> {
                                   color: Colors.black,
                                 )),
                           ),
-                          Text('Veteriner Misin?'),
+                         const Text('Veteriner Misin?'),
                           Padding(
                             padding: EdgeInsets.only(left: 15.w, right: 15.w),
                             child: Container(
                                 height: 1,
-                                decoration: BoxDecoration(
+                                decoration:const BoxDecoration(
                                     gradient: LinearGradient(
                                         colors: [
                                       Colors.black,
@@ -143,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               );
             }
-            return Container();
+            return const Center(child: CircularProgressIndicator());
           },
         ),
       ),
@@ -151,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Text companyNameText() {
-    return Text(
+    return const Text(
       'VetBul',
       style: TextStyle(
         color: Colors.black,
@@ -161,10 +158,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Container logo() {
-    return Container(
+    return  Container(
       height: 70.h,
       width: 70.w,
-      decoration: BoxDecoration(
+      decoration:const BoxDecoration(
         image: DecorationImage(
             image: AssetImage('lib/assets/vet.png'), fit: BoxFit.fill),
       ),
@@ -178,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => RegisterPage()));
           },
-          child: Text(
+          child:const Text(
             ' Kayıt Ol',
             style: TextStyle(color: Colors.blue, fontSize: 15),
           )),
@@ -203,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
             iconSize: 15,
           ),
         ),
-        SizedBox(
+      const  SizedBox(
           width: 10,
         ),
         Container(
@@ -215,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
             iconSize: 15,
           ),
         ),
-        SizedBox(
+      const  SizedBox(
           width: 10,
         ),
       ],
@@ -227,14 +224,14 @@ class _LoginPageState extends State<LoginPage> {
       height: 60.h,
       width: 320.w,
       decoration: BoxDecoration(
-        color: Color(0xFFF36969),
+        color:const Color(0xFFF36969),
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextButton(
         onPressed: () {
           _authenticateWithEmailAndPassword(context);
         },
-        child: Text(
+        child:const Text(
           'Giriş Yap',
           style: TextStyle(color: Colors.white),
         ),
@@ -253,7 +250,7 @@ class _LoginPageState extends State<LoginPage> {
                 builder: (context) => SifremiUnuttumPage(),
               ));
         },
-        child: Text(
+        child:const Text(
           'Şifremi Unuttum',
           style: TextStyle(color: Colors.black),
         ),
@@ -287,7 +284,7 @@ class _LoginPageState extends State<LoginPage> {
               },
             ),
             filled: true,
-            labelStyle: TextStyle(color: Colors.grey),
+            labelStyle:const TextStyle(color: Colors.grey),
             fillColor: Colors.white,
             labelText: 'Şifre',
             border: OutlineInputBorder(

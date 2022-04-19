@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:controller_vet/constant/constants.dart';
 import 'package:controller_vet/pages/hosgeldin_page.dart';
 import 'package:controller_vet/pages/il_secme_sayfasi.dart';
 import 'package:controller_vet/pages/ilce_secme_sayfasi.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,8 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-
 import '../bloc/auth_bloc.dart';
 import '../model/il_model.dart';
 
@@ -144,8 +142,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    double genislik = MediaQuery.of(context).size.width;
-    double yukseklik = MediaQuery.of(context).size.height;
+    
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is Authenticated) {
@@ -158,7 +155,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.error)));
         }
-        // TODO: implement listener
+       
       },
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
@@ -172,7 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.blue.shade300,
-                title: Text('Veteriner Kayıt Formu'),
+                title:const Text('Veteriner Kayıt Formu'),
               ),
               body: formWidget(),
             );
@@ -184,6 +181,8 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Form formWidget() {
+    double _yukseklik= Constants.getSizeHeight(context);
+    double _genislik = Constants.getSizeWidth(context);
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
@@ -191,10 +190,8 @@ class _RegisterPageState extends State<RegisterPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             imageUploadButton(),
-            Center(
-              child: Container(
-                child: Text('Görsel'),
-              ),
+         const   Center(
+              child:   Text('Görsel'),
             ),
             textFieldOlustur(
                 'Veteriner Klinik Adı',
@@ -205,13 +202,13 @@ class _RegisterPageState extends State<RegisterPage> {
             textFieldOlustur(
                 'Mail Adresi',
                 false,
-                EdgeInsets.only(top: 10, right: 25, left: 25),
+              const  EdgeInsets.only(top: 10, right: 25, left: 25),
                 TextInputType.emailAddress,
                 emailController),
             textFieldOlustur(
                 'Şifre',
                 true,
-                EdgeInsets.only(
+              const  EdgeInsets.only(
                   top: 10,
                   left: 25,
                   right: 25,
@@ -221,17 +218,17 @@ class _RegisterPageState extends State<RegisterPage> {
             textFieldOlustur(
                 'Telefon Numarası',
                 false,
-                EdgeInsets.only(top: 10, right: 25, left: 25),
+               const EdgeInsets.only(top: 10, right: 25, left: 25),
                 TextInputType.number,
                 vetPhoneController),
             textFieldOlustur(
                 'WhatsApp Hattı',
                 false,
-                EdgeInsets.only(top: 10, right: 25, left: 25),
+               const EdgeInsets.only(top: 10, right: 25, left: 25),
                 TextInputType.number,
                 vetWhatsappController),
             Padding(
-              padding: EdgeInsets.only(top: 10, right: 25, left: 25),
+              padding: const EdgeInsets.only(top: 10, right: 25, left: 25),
               child: TextFormField(
                   controller: vetDetayController,
                   obscureText: false,
@@ -239,21 +236,21 @@ class _RegisterPageState extends State<RegisterPage> {
                   maxLines: 6,
                   decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                          borderSide:const BorderSide(color: Colors.grey),
                           borderRadius: BorderRadius.circular(12)),
-                      labelStyle: TextStyle(color: Colors.grey),
+                      labelStyle:const TextStyle(color: Colors.grey),
                       labelText: 'Klinik Detay Bilgileri',
                       filled: true,
                       fillColor: Colors.grey.shade200,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: Colors.grey)))),
+                          borderSide:const BorderSide(color: Colors.grey)))),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 30, top: 15),
+              const  Padding(
+                  padding:  EdgeInsets.only(left: 30, top: 15),
                   child: Text('Pet Taksi Hizmeti veriyor musunuz?'),
                 ),
                 Padding(
@@ -272,8 +269,8 @@ class _RegisterPageState extends State<RegisterPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 30, top: 15),
+              const  Padding(
+                  padding:  EdgeInsets.only(left: 30, top: 15),
                   child: Text('7/24 hizmet veriyor musunuz?'),
                 ),
                 Padding(
@@ -292,8 +289,8 @@ class _RegisterPageState extends State<RegisterPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 30, top: 15),
+              const  Padding(
+                  padding:  EdgeInsets.only(left: 30, top: 15),
                   child: Text('Evde Bakım hizmeti veriyor musunuz?'),
                 ),
                 Padding(
@@ -318,7 +315,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 36, vertical: 20),
+                  padding:const EdgeInsets.symmetric(horizontal: 36, vertical: 20),
                 ),
                 child: Center(
                   child: Text(
@@ -327,7 +324,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       fontSize: 18,
                       fontFamily: GoogleFonts.ebGaramond().toString(),
                       color: Colors.white,
-                      shadows: <Shadow>[
+                      shadows:const <Shadow>[
                         Shadow(
                           offset: Offset(1, 1),
                           color: Colors.grey,
@@ -361,7 +358,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       fontSize: 18,
                       fontFamily: GoogleFonts.ebGaramond().toString(),
                       color: Colors.white,
-                      shadows: <Shadow>[
+                      shadows:const <Shadow>[
                         Shadow(
                           offset: Offset(1, 1),
                           color: Colors.grey,
@@ -381,7 +378,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
             Padding(
               padding:
-                  EdgeInsets.only(top: 10, right: 25, left: 25, bottom: 10),
+                const  EdgeInsets.only(top: 10, right: 25, left: 25, bottom: 10),
               child: TextFormField(
                   controller: vetAdresController,
                   obscureText: false,
@@ -389,15 +386,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   maxLines: 3,
                   decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                          borderSide:const BorderSide(color: Colors.grey),
                           borderRadius: BorderRadius.circular(12)),
-                      labelStyle: TextStyle(color: Colors.grey),
+                      labelStyle:const TextStyle(color: Colors.grey),
                       labelText: 'Açık adres bilgileri',
                       filled: true,
                       fillColor: Colors.grey.shade200,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: Colors.grey)))),
+                          borderSide:const BorderSide(color: Colors.grey)))),
             ),
             Center(
               child: Container(
@@ -413,14 +410,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       _createAccountWithEmailAndPassword(context);
                     });
                   },
-                  child: Text(
+                  child:const Text(
                     'Kayıt Ol',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
             ),
-            SizedBox(
+           const SizedBox(
               height: 10,
             )
           ],
@@ -440,7 +437,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ? Container(
                 width: MediaQuery.of(context).size.width * 0.4,
                 height: MediaQuery.of(context).size.height * 0.2,
-                decoration: BoxDecoration(
+                decoration:const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage('lib/assets/button.png'))),
               )
@@ -473,15 +470,15 @@ class _RegisterPageState extends State<RegisterPage> {
           keyboardType: tip,
           decoration: InputDecoration(
               focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey),
+                  borderSide:const BorderSide(color: Colors.grey),
                   borderRadius: BorderRadius.circular(12)),
-              labelStyle: TextStyle(color: Colors.grey),
+              labelStyle:const TextStyle(color: Colors.grey),
               labelText: text,
               filled: true,
               fillColor: Colors.grey.shade200,
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey)))),
+                  borderSide:const BorderSide(color: Colors.grey)))),
     );
   }
 

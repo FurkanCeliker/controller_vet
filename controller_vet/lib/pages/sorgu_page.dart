@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:controller_vet/model/il_model.dart';
 import 'package:controller_vet/pages/il_secme_sayfasi.dart';
 import 'package:controller_vet/pages/ilce_secme_sayfasi.dart';
+import 'package:controller_vet/pages/listview_vet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,6 +42,7 @@ class _IlIlceSecimiState extends State<IlIlceSecimi> {
   bool petTaksiSwitch = false;
   bool yediYirmiDortSwitch = false;
   bool evdeBakimSwitch = false;
+  GlobalKey<FormState> _formKey = GlobalKey();
 
   /// JSON'u okuyup içinden Il nesnelerini listede toplama
   Future<void> _illeriGetir() async {
@@ -118,21 +120,17 @@ class _IlIlceSecimiState extends State<IlIlceSecimi> {
   Widget build(BuildContext context) {
     double genislik = Constants.getSizeWidth(context);
     double yukseklik = Constants.getSizeHeight(context);
-  
+
     return Scaffold(
-      
-      
       backgroundColor: Color.fromARGB(255, 212, 230, 244),
       appBar: AppBar(
-        
-        
         title: Text(
           "Veteriner Arama",
           style: TextStyle(
             fontSize: 18,
             fontFamily: GoogleFonts.ebGaramond().toString(),
             color: Colors.white,
-            shadows: <Shadow>[
+            shadows:const <Shadow>[
               Shadow(
                 offset: Offset(1, 1),
                 color: Colors.grey,
@@ -141,135 +139,142 @@ class _IlIlceSecimiState extends State<IlIlceSecimi> {
             ],
           ),
         ),
-        
         centerTitle: true,
       ),
-      body: Container(
-       
-        
+      body: Form(
+        key: _formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0, vertical: 8.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary:
-                          _ilSecilmisMi ? Colors.blue.shade300 : Colors.grey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 36, vertical: 20),
-                    ),
-                    child: Center(
-                      child: Text(
-                        _secilenIl == null ? "İl Seçiniz" : "$_secilenIl",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: GoogleFonts.ebGaramond().toString(),
-                          color: Colors.white,
-                          shadows: <Shadow>[
-                            Shadow(
-                              offset: Offset(1, 1),
-                              color: Colors.grey,
-                              blurRadius: 3,
-                            ),
-                          ],
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: _ilSecilmisMi ? Colors.blue.shade300 : Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 36, vertical: 20),
+                ),
+                child: Center(
+                  child: Text(
+                    _secilenIl == null ? "İl Seçiniz" : "$_secilenIl",
+                    style:const TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(1, 1),
+                          color: Colors.grey,
+                          blurRadius: 3,
                         ),
-                      ),
+                      ],
                     ),
-                    onPressed: () async {
-                      await _ilSecmeSayfasinaGit();
-                    },
                   ),
                 ),
-                Padding(
+                onPressed: () async {
+                  await _ilSecmeSayfasinaGit();
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 30.0, vertical: 16.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary:
+                      _ilceSecilmisMi ? Colors.blue.shade300 : Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0, vertical: 16.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary:
-                          _ilceSecilmisMi ? Colors.blue.shade300 : Colors.grey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 36, vertical: 20),
-                    ),
-                    child: Center(
-                      child: Text(
-                        _secilenIlce == null ? "İlçe Seçiniz" : "$_secilenIlce",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: GoogleFonts.ebGaramond().toString(),
-                          color: Colors.white,
-                          shadows: <Shadow>[
-                            Shadow(
-                              offset: Offset(1, 1),
-                              color: Colors.grey,
-                              blurRadius: 3,
-                            ),
-                          ],
+                      horizontal: 36, vertical: 20),
+                ),
+                child: Center(
+                  child: Text(
+                    _secilenIlce == null ? "İlçe Seçiniz" : "$_secilenIlce",
+                    style:const TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(1, 1),
+                          color: Colors.grey,
+                          blurRadius: 3,
                         ),
-                      ),
+                      ],
                     ),
-                    onPressed: () async {
-                      await _ilceSecmeSayfasinaGit();
-                    },
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text('Pet Taksi Hizmeti     '),
-                    CupertinoSwitch(
-                        value: petTaksiSwitch,
-                        onChanged: (value) {
-                          setState(() {
-                            petTaksiSwitch = value;
-                          });
-                        })
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text('Evde Bakım Hizmeti'),
-                    CupertinoSwitch(
-                        value: evdeBakimSwitch,
-                        onChanged: (value) {
-                          setState(() {
-                            evdeBakimSwitch = value;
-                          });
-                        })
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text('7/24 Açık Veteriner  '),
-                    CupertinoSwitch(
-                        value: yediYirmiDortSwitch,
-                        onChanged: (value) {
-                          setState(() {
-                            yediYirmiDortSwitch = value;
-                          });
-                        })
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(yukseklik * 0.1),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(20)),fixedSize:Size(200.w, 60.h)),
-                      onPressed: () {}, child: Text('Veteriner Bul',style: TextStyle(fontSize: 25),)),
-                )
+                onPressed: () async {
+                  await _ilceSecmeSayfasinaGit();
+                },
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+               const Text('Pet Taksi Hizmeti     '),
+                CupertinoSwitch(
+                    value: petTaksiSwitch,
+                    onChanged: (value) {
+                      setState(() {
+                        petTaksiSwitch = value;
+                      });
+                    })
               ],
-            
-          
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+               const Text('Evde Bakım Hizmeti'),
+                CupertinoSwitch(
+                    value: evdeBakimSwitch,
+                    onChanged: (value) {
+                      setState(() {
+                        evdeBakimSwitch = value;
+                      });
+                    })
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+              const  Text('7/24 Açık Veteriner  '),
+                CupertinoSwitch(
+                    value: yediYirmiDortSwitch,
+                    onChanged: (value) {
+                      setState(() {
+                        yediYirmiDortSwitch = value;
+                      });
+                    })
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.all(yukseklik * 0.1),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20)),
+                      fixedSize: Size(200.w, 60.h)),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: ((context) => ListviewVet(
+                              evdeBakim: evdeBakimSwitch,
+                              il: _secilenIl == null ? '' : _secilenIl!,
+                              ilce: _secilenIlce == null ? '' : _secilenIlce!,
+                              petTaksi: petTaksiSwitch,
+                              yediYirmiDort: yediYirmiDortSwitch,
+                            ))));
+                  },
+                  child:const Text(
+                    'Veteriner Bul',
+                    style: TextStyle(fontSize: 25),
+                  )),
+            )
+          ],
         ),
       ),
     );

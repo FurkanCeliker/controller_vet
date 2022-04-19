@@ -1,4 +1,4 @@
-package com.example.controller_vet
+package com.clkr.vetbul
 
 import io.flutter.embedding.android.FlutterActivity
 
