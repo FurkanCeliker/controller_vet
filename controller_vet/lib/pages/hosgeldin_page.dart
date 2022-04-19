@@ -65,7 +65,7 @@ class HosgeldinPage extends StatelessWidget {
             left: _genislik*0.25,
             child: Container(
               width: _genislik*0.5,
-              height: _yukseklik*0.3,
+              height: _yukseklik*0.25,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -89,15 +89,17 @@ class HosgeldinPage extends StatelessWidget {
           
          
           Positioned(
-              top: _yukseklik*0.5,
-              left: _genislik*0.3,
-              child: const  Text(
-                  "VetBul'a Hoşgeldin",
-                  style: TextStyle(fontSize: 45, color: Colors.white),
-                ),
+            
+             
+              child: Center(
+                child:   Text(
+                    "VetBul'a Hoşgeldin",
+                    style: TextStyle(fontSize: 45, color: Colors.white),
+                  ),
+              ),
               ),
           Positioned(
-              bottom: _yukseklik*0.2,
+              bottom: _yukseklik*0.3,
               left: _genislik*0.25,
               child: SizedBox(
                 width: 200.w,

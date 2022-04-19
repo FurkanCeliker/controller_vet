@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "208852052256",
+    "project_id": "findvet-4ec13",
+    "storage_bucket": "findvet-4ec13.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208852052256:android:1ea878c1f4a7cc42214f45",
+        "android_client_info": {
+          "package_name": "com.clkr.vetbul"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208852052256-mha7t8aslgvf7qbd8kchq2mbk5f6ko09.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.clkr.vetbul",
+            "certificate_hash": "d24ea5dff26b40e9c5364fb5770e3df83da73599"
+          }
+        },
+        {
+          "client_id": "208852052256-981bhhegi94uh0nvvmerkac5s2kh3sfe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2C-aQ9l-pm7nNAWDv6lYEWPJo-sjlUcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208852052256-981bhhegi94uh0nvvmerkac5s2kh3sfe.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "208852052256-kpqstn5m3rrl0ptcgmm9gssm81t4i5f2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cls"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
