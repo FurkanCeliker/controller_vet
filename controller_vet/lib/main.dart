@@ -1,5 +1,4 @@
 import 'package:controller_vet/bloc/auth_bloc.dart';
-import 'package:controller_vet/constant/constants.dart';
 import 'package:controller_vet/pages/login_page.dart';
 import 'package:controller_vet/pages/sorgu_page.dart';
 import 'package:controller_vet/repositories/auth_repository.dart';
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
     
 
     return ScreenUtilInit(
-        designSize: Size(412, 732),
+        designSize:const Size(412, 732),
         builder: () => RepositoryProvider(
               create: (context) => AuthRepository(),
               child: BlocProvider(

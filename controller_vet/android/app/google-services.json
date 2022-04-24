@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:208852052256:android:1ea878c1f4a7cc42214f45",
+        "mobilesdk_app_id": "1:208852052256:android:44782dc58d78ad82214f45",
         "android_client_info": {
-          "package_name": "com.clkr.vetbul"
+          "package_name": "com.clkr1.vetbul"
         }
       },
       "oauth_client": [
         {
-          "client_id": "208852052256-mha7t8aslgvf7qbd8kchq2mbk5f6ko09.apps.googleusercontent.com",
+          "client_id": "208852052256-oaalp83b4fn6229e1oe7p79egtg4nbom.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.clkr.vetbul",
+            "package_name": "com.clkr1.vetbul",
             "certificate_hash": "d24ea5dff26b40e9c5364fb5770e3df83da73599"
           }
         },

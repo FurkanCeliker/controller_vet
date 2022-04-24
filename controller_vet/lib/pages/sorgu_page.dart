@@ -216,6 +216,7 @@ class _IlIlceSecimiState extends State<IlIlceSecimi> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                const Icon(Icons.local_taxi),
                const Text('Pet Taksi Hizmeti     '),
                 CupertinoSwitch(
                     value: petTaksiSwitch,
@@ -229,6 +230,7 @@ class _IlIlceSecimiState extends State<IlIlceSecimi> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+               const Icon(Icons.home),
                const Text('Evde Bakım Hizmeti'),
                 CupertinoSwitch(
                     value: evdeBakimSwitch,
@@ -242,6 +244,7 @@ class _IlIlceSecimiState extends State<IlIlceSecimi> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                const Icon(Icons.twenty_four_mp),
               const  Text('7/24 Açık Veteriner  '),
                 CupertinoSwitch(
                     value: yediYirmiDortSwitch,
@@ -256,8 +259,8 @@ class _IlIlceSecimiState extends State<IlIlceSecimi> {
               padding: EdgeInsets.all(yukseklik * 0.1),
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20)),
+                      shape:  RoundedRectangleBorder(
+                          borderRadius:  BorderRadius.circular(20)),
                       fixedSize: Size(200.w, 60.h)),
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(

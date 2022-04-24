@@ -26,6 +26,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+  double  _yukseklik =MediaQuery.of(context).size.height;
+  double _genislik = MediaQuery.of(context).size.width;
     return Material(
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
@@ -90,27 +92,28 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(left: 15.w, right: 15.w),
+                            padding:  EdgeInsets.only(right:5.w ),
                             child: Container(
-                                height: 1,
-                                decoration:const BoxDecoration(
-                                    gradient: LinearGradient(
-                                        colors: [
-                                      Colors.white,
-                                      Colors.black,
-                                    ],
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight)),
-                                padding:
-                                    EdgeInsets.only(left: 100.w, right: 15),
-                                child: Divider(
-                                  height: 1.h,
-                                  color: Colors.black,
-                                )),
+                                  height: 1,
+                                  decoration:const BoxDecoration(
+                                      gradient: LinearGradient(
+                                          colors: [
+                                        Colors.white,
+                                        Colors.black,
+                                      ],
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight)),
+                                  padding:
+                                      EdgeInsets.only(left: 100.w, right: 15),
+                                  child: Divider(
+                                    height: 1.h,
+                                    color: Colors.black,
+                                  )),
                           ),
-                         const Text('Veteriner Misin?'),
+                          
+                        const Center(child:  Text('Veteriner Misin?')),
                           Padding(
-                            padding: EdgeInsets.only(left: 15.w, right: 15.w),
+                            padding: EdgeInsets.only(left: 5.w, ),
                             child: Container(
                                 height: 1,
                                 decoration:const BoxDecoration(
